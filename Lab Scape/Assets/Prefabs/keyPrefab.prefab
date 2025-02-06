@@ -173,3 +173,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatStrength: 0.5
   floatSpeed: 2
+  pickupSound: {fileID: 8300000, guid: 1eabde191532ab545ae081bd0f3d459e, type: 3}

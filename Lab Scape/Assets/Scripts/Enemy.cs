@@ -9,12 +9,16 @@ public class Enemy : MonoBehaviour
 
     public bool IsDead { get; private set; } = false; // Estado del enemigo
     private EnemyManager enemyManager;
+    private Rigidbody2D rb; // Referencia al Rigidbody2D del enemigo
+
+    public float bounceForce = 5f; // Fuerza de rebote al colisionar con el jugador
 
     private void Start()
     {
         currentHealth = maxHealth; // Inicializar la salud actual
         player = GameObject.FindGameObjectWithTag("Player").transform; // Buscar el jugador
         enemyManager = FindObjectOfType<EnemyManager>();
+        rb = GetComponent<Rigidbody2D>(); // Obtener el componente Rigidbody2D
     }
 
     private void Update()
@@ -26,7 +30,6 @@ public class Enemy : MonoBehaviour
             transform.position += direction * moveSpeed * Time.deltaTime;
         }
     }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -35,6 +38,13 @@ public class Enemy : MonoBehaviour
             if (playerScript != null)
             {
                 playerScript.TakeDamage(1); // Quitar 1 de vida al jugador
+
+                // Calcular la dirección de retroceso
+                Vector2 bounceDirection = (transform.position - other.transform.position).normalized;
+
+                // Mover el enemigo un pequeño paso atrás
+                float stepBackDistance = 0.5f; // Ajusta esta distancia según sea necesario
+                transform.position += (Vector3)bounceDirection * stepBackDistance; // Mover el enemigo hacia atrás
             }
         }
     }
@@ -60,5 +70,4 @@ public class Enemy : MonoBehaviour
         }
         Destroy(gameObject); // Destruir el objeto enemigo
     }
-
 }

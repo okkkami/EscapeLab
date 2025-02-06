@@ -60,6 +60,9 @@ public class MenuController : MonoBehaviour
         PlayerPrefs.SetInt("HasKey", 0); // Restablecer el estado de la llave
         PlayerPrefs.Save(); // Asegurarse de que se guarden los cambios
 
+        // Restablecer la puntuación
+        PlayerPrefs.SetInt("Score", 0); // Reiniciar la puntuación a 0
+        PlayerPrefs.Save(); // Asegurarse de que se guarden los cambios
 
 
         SceneManager.LoadScene("hab_inicial");

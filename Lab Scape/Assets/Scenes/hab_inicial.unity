@@ -1203,7 +1203,7 @@ GameObject:
   - component: {fileID: 680963231}
   - component: {fileID: 680963230}
   m_Layer: 0
-  m_Name: DoorInicial
+  m_Name: doorInicialR
   m_TagString: DoorInicial
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1289,7 +1289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: hab1
-  doorName: DoorInicial
+  doorName: doorInicialR
 --- !u!61 &680963231
 BoxCollider2D:
   m_ObjectHideFlags: 0

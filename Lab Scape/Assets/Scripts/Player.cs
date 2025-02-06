@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI; // Asegúrate de incluir esto para trabajar con UI
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     private bool isGameOver = false; // Flag para saber si el juego ha terminado
     public GameObject gameOverText;  // Referencia al texto de Game Over
     public Button mainMenuButton;  // Cambia a Button en lugar de GameObject
+    public TextMeshProUGUI totalScoreText; // Referencia al texto que mostrará la puntuación total
 
     private bool hasKey; // Indica si el jugador tiene la llave
 
@@ -34,13 +36,15 @@ public class Player : MonoBehaviour
     // Referencia al AudioSource
     private AudioSource audioSource; // Componente de AudioSource
     public AudioClip damageSound; // Clip de sonido para daño
-
     public AudioClip shootSound; // Clip de sonido para disparo
+
+
 
     private void Start()
     {
         // Recuperar la salud desde PlayerPrefs
         currentHealth = PlayerPrefs.GetInt("PlayerHealth", maxHealth); // Si no está guardada, se establece a maxHealth
+
         // Recuperar la velocidad desde PlayerPrefs
         currentMoveSpeed = PlayerPrefs.GetFloat("PlayerSpeed", initialMoveSpeed); // Si no está guardada, se establece a 5 por defecto
         animator = GetComponent<Animator>();
@@ -57,12 +61,60 @@ public class Player : MonoBehaviour
             gameOverText.SetActive(false); // Asegúrate de que el texto de Game Over esté desactivado al inicio
         }
 
+        if (totalScoreText != null)
+        {
+            totalScoreText.gameObject.SetActive(false); // Asegúrate de que el texto de puntuación total esté desactivado al inicio
+        }
+
         UpdateCheeseUI(); // Asegúrate de que este método esté definido
         // Inicializar el estado de la llave
         hasKey = PlayerPrefs.GetInt("HasKey", 0) == 1; // 0 significa que no tiene la llave
         audioSource = GetComponent<AudioSource>(); // Obtener el componente AudioSource
+
+        // Cargar la última puerta cruzada
+        string lastDoor = PlayerPrefs.GetString("LastDoor", "");
+        MoveToSpawnPoint(lastDoor);
     }
 
+    private void MoveToSpawnPoint(string lastDoor)
+    {
+        // Encuentra el punto de aparición correspondiente y mueve al jugador
+        GameObject spawnPoint = null;
+
+        switch (lastDoor)
+        {
+            case "doorR":
+                spawnPoint = GameObject.Find("spawnLeft"); // Encuentra el punto de aparición a la izquierda
+                break;
+            case "doorL":
+                spawnPoint = GameObject.Find("spawnRight"); // Encuentra el punto de aparición a la derecha
+                break;
+            case "doorU":
+                spawnPoint = GameObject.Find("spawnDown"); // Encuentra el punto de aparición abajo
+                break;
+            case "doorD":
+                spawnPoint = GameObject.Find("spawnUp"); // Encuentra el punto de aparición arriba
+                break;
+            case "DoorTesoroR":
+                spawnPoint = GameObject.Find("spawnLeft"); // Salir por la puerta izquierda
+                break;
+            case "DoorTesoroL":
+                spawnPoint = GameObject.Find("spawnRight"); // Salir por la puerta derecha
+                break;
+            case "doorInicialR":
+                spawnPoint = GameObject.Find("spawnLeft");
+                break;
+            case "doorInicialL":
+                spawnPoint = GameObject.Find("spawnRight");
+                break;
+        }
+
+        if (spawnPoint != null)
+        {
+            // Mueve al jugador a la posición del punto de aparición
+            transform.position = spawnPoint.transform.position;
+        }
+    }
     private void Update()
     {
         if (isGameOver) return; // Si el juego ha terminado, no procesamos más entradas
@@ -177,6 +229,7 @@ public class Player : MonoBehaviour
     public void Die()
     {
         DisablePlayerControls();  // Llamar al método que desactiva el control
+        Destroy(gameObject); // Destruir el objeto del jugador
     }
 
     public void BoostSpeed(float amount)
@@ -192,7 +245,12 @@ public class Player : MonoBehaviour
         isGameOver = true;  // Cambiar el flag a verdadero para bloquear entradas
         gameOverText.SetActive(true);  // Mostrar el texto de Game Over
         mainMenuButton.gameObject.SetActive(true);  // Mostrar el botón de "Main Menu"
+        totalScoreText.gameObject.SetActive(true);
         Time.timeScale = 0f;  // Detener todo el tiempo del juego
+
+        // Mostrar la puntuación total
+        int totalScore = PlayerPrefs.GetInt("Score", 0); // Cargar la puntuación total desde PlayerPrefs
+        totalScoreText.text = "Puntos Totales: " + totalScore; // Actualizar el texto de puntuación total
     }
 
     public void LoadMainMenu()

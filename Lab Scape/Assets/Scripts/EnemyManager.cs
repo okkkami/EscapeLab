@@ -7,6 +7,8 @@ public class EnemyManager : MonoBehaviour
     public int enemyCount = 5; // Número de enemigos a generar
     public GameObject keyPrefab; // Prefab de la llave
     public Transform keySpawnPoint; // Punto donde aparecerá la llave
+    public ScoreManager scoreManager; // Referencia al ScoreManager
+    public GameObject blockedDoorImage; // Referencia a la imagen de la puerta bloqueada
 
     private List<Enemy> enemies = new List<Enemy>(); // Lista de enemigos activos
     private int defeatedEnemies; // Enemigos derrotados
@@ -19,6 +21,12 @@ public class EnemyManager : MonoBehaviour
         if (PlayerPrefs.GetInt("EnemiesDefeated", 0) == 0)
         {
             SpawnEnemies(); // Solo generar enemigos si no han sido derrotados
+        }
+
+        // Asegúrate de que la imagen de puerta bloqueada esté desactivada al inicio
+        if (blockedDoorImage != null)
+        {
+            blockedDoorImage.SetActive(false);
         }
     }
 
@@ -45,12 +53,24 @@ public class EnemyManager : MonoBehaviour
         enemies.Remove(enemy);
         defeatedEnemies++; // Incrementar el contador de enemigos derrotados
 
+        // Actualizar la puntuación
+        if (scoreManager != null)
+        {
+            scoreManager.AddScore(1); // Sumar 1 punto por enemigo derrotado
+        }
+
         // Guardar el estado de los enemigos en PlayerPrefs
         if (enemies.Count == 0)
         {
             PlayerPrefs.SetInt("EnemiesDefeated", 1); // Marcar que todos los enemigos han sido derrotados
             PlayerPrefs.Save(); // Guardar los cambios
             AppearKey(); // Aparecer la llave al derrotar al último enemigo
+                         // Aquí debes llamar a HideBlockedDoorImage en las puertas correspondientes
+            Porta[] puertas = FindObjectsOfType<Porta>(); // Encuentra todas las instancias de Porta
+            foreach (var puerta in puertas)
+            {
+                puerta.HideBlockedDoorImage(); // Activar la imagen de la puerta bloqueada
+            }
         }
     }
 
@@ -71,5 +91,14 @@ public class EnemyManager : MonoBehaviour
         defeatedEnemies = 0; // Reiniciar el contador de enemigos derrotados
         enemies.Clear(); // Limpiar la lista de enemigos
         SpawnEnemies(); // Regenerar enemigos si es necesario
+    }
+
+    // Método para ocultar la imagen de la puerta bloqueada
+    private void HideBlockedDoorImage()
+    {
+        if (blockedDoorImage != null)
+        {
+            blockedDoorImage.SetActive(false); // Desactivar la imagen
+        }
     }
 }

@@ -1,16 +1,24 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI; // Asegúrate de incluir esto para trabajar con UI
 
 public class Porta : MonoBehaviour
 {
     [SerializeField] private string sceneToLoad;  // Nombre de la escena destino
     [SerializeField] private string doorName;     // Nombre único de esta puerta
     private EnemyManager enemyManager; // Referencia al EnemyManager
+    public GameObject blockedDoorImage; // Referencia a la imagen de puerta bloqueada
 
     private void Start()
     {
         // Obtener la referencia al EnemyManager en la escena
         enemyManager = FindObjectOfType<EnemyManager>();
+
+        // Asegúrate de que la imagen de puerta bloqueada esté desactivada al inicio
+        if (blockedDoorImage != null)
+        {
+            blockedDoorImage.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,7 +29,7 @@ public class Porta : MonoBehaviour
             Debug.Log("Jugador ha entrado en la puerta.");
 
             // Verificar si la puerta es DoorInicial
-            if (doorName == "DoorInicial")
+            if (doorName == "doorInicialR")
             {
                 // Siempre se puede pasar por DoorInicial
                 CambiarEscena();
@@ -36,6 +44,7 @@ public class Porta : MonoBehaviour
                 else
                 {
                     Debug.Log("La puerta del tesoro está bloqueada. Necesitas una llave.");
+                    ShowBlockedDoorImage(); // Mostrar imagen de puerta bloqueada
                 }
             }
             else
@@ -48,6 +57,7 @@ public class Porta : MonoBehaviour
                 else
                 {
                     Debug.Log("La puerta está bloqueada. Derrota a todos los enemigos primero.");
+                    ShowBlockedDoorImage(); // Mostrar imagen de puerta bloqueada
                 }
             }
         }
@@ -59,5 +69,23 @@ public class Porta : MonoBehaviour
         Debug.Log("Cambiando de escena.");
         PlayerPrefs.SetString("LastDoor", doorName);
         SceneManager.LoadScene(sceneToLoad);
+    }
+
+    // Método para mostrar la imagen de puerta bloqueada
+    private void ShowBlockedDoorImage()
+    {
+        if (blockedDoorImage != null)
+        {
+            blockedDoorImage.SetActive(false); // Activar la imagen
+        }
+    }
+
+    // Método para ocultar la imagen de puerta bloqueada
+    public void HideBlockedDoorImage()
+    {
+        if (blockedDoorImage != null)
+        {
+            blockedDoorImage.SetActive(false); // Desactivar la imagen
+        }
     }
 }

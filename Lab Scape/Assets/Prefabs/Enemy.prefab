@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   moveSpeed: 2
+  bounceForce: 1
 --- !u!50 &8243426178721119
 Rigidbody2D:
   serializedVersion: 4

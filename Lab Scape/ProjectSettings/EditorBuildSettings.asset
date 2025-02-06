@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/hab1.unity
+    guid: da3d2d71632bb824898972fe19dfacc7
+  - enabled: 1
+    path: Assets/Scenes/hab2.unity
+    guid: 3fd20b6b510ce5b49aa9b8b0e9d87d7c
+  - enabled: 1
+    path: Assets/Scenes/hab_inicial.unity
+    guid: d6b30605b63a0fc48b4fb75ec7d66c70
+  - enabled: 1
+    path: Assets/Scenes/hab_shop.unity
+    guid: 05934c9c27a73714db96c0d111ffbd84
+  - enabled: 1
+    path: Assets/Scenes/hab3.unity
+    guid: 5dd9aae95457b084fb3064abddbcd8fd
+  - enabled: 1
+    path: Assets/Scenes/hab_boss.unity
+    guid: 519fac892a7800045bd2965549aed689
+  - enabled: 1
+    path: Assets/Scenes/hab_tesoro.unity
+    guid: f426473bba4fe474981a624eac6585b8
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Options.unity
+    guid: 9c466c98450960c4c93ad7230183d0bc
+  m_configObjects: {}

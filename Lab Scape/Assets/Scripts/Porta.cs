@@ -21,6 +21,19 @@ public class Porta : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        // Verificar si hay enemigos en la sala actual
+        if (enemyManager != null && enemyManager.AreAllEnemiesDefeated())
+        {
+            HideBlockedDoorImage(); // Ocultar la imagen si no hay enemigos
+        }
+        else
+        {
+            ShowBlockedDoorImage(); // Mostrar la imagen si hay enemigos
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

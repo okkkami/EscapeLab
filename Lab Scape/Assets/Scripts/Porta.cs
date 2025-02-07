@@ -8,16 +8,22 @@ public class Porta : MonoBehaviour
     [SerializeField] private string doorName;     // Nombre único de esta puerta
     private EnemyManager enemyManager; // Referencia al EnemyManager
     public GameObject blockedDoorImage; // Referencia a la imagen de puerta bloqueada
+    public GameObject blockedDoorImageTesoro; // Referencia a la imagen de puerta bloqueada del tesoro
 
     private void Start()
     {
         // Obtener la referencia al EnemyManager en la escena
         enemyManager = FindObjectOfType<EnemyManager>();
 
-        // Asegúrate de que la imagen de puerta bloqueada esté desactivada al inicio
+        // Asegúrate de que la imagen de puerta bloqueada esté activada al inicio
         if (blockedDoorImage != null)
         {
             blockedDoorImage.SetActive(true);
+        }
+        // Asegúrate de que la imagen de puerta bloqueada esté activada al inicio
+        if (blockedDoorImageTesoro != null)
+        {
+            blockedDoorImageTesoro.SetActive(true);
         }
     }
 
@@ -52,12 +58,13 @@ public class Porta : MonoBehaviour
                 // Verificar si el jugador tiene la llave
                 if (player != null && player.HasKey())
                 {
+            
                     CambiarEscena();
                 }
                 else
                 {
                     Debug.Log("La puerta del tesoro está bloqueada. Necesitas una llave.");
-                    ShowBlockedDoorImage(); // Mostrar imagen de puerta bloqueada
+                    ShowBlockedDoorImageTesoro(); // Mostrar imagen de puerta bloqueada
                 }
             }
             else
@@ -89,7 +96,16 @@ public class Porta : MonoBehaviour
     {
         if (blockedDoorImage != null)
         {
-            blockedDoorImage.SetActive(false); // Activar la imagen
+            blockedDoorImage.SetActive(true); // Activar la imagen
+        }
+    }
+
+    // Método para mostrar la imagen de puerta bloqueada
+    private void ShowBlockedDoorImageTesoro()
+    {
+        if (blockedDoorImageTesoro != null)
+        {
+            blockedDoorImageTesoro.SetActive(true); // Activar la imagen
         }
     }
 
@@ -99,6 +115,14 @@ public class Porta : MonoBehaviour
         if (blockedDoorImage != null)
         {
             blockedDoorImage.SetActive(false); // Desactivar la imagen
+        }
+    }
+    public void HideBlockedDoorImageTesoro()
+    {
+        if (blockedDoorImageTesoro != null)
+        {
+            Debug.Log("Ocultando la imagen de la puerta bloqueada del tesoro."); // Para depuración
+            blockedDoorImageTesoro.SetActive(false); // Desactivar la imagen
         }
     }
 }

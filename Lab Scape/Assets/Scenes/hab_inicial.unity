@@ -1290,6 +1290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneToLoad: hab1
   doorName: doorInicialR
+  blockedDoorImage: {fileID: 0}
 --- !u!61 &680963231
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2440,7 +2441,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 736057327068921893, guid: 6736955553e82e042affecbd248f8459, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.36
+      value: -0.62
       objectReference: {fileID: 0}
     - target: {fileID: 736057327068921893, guid: 6736955553e82e042affecbd248f8459, type: 3}
       propertyPath: m_LocalPosition.y

@@ -33,7 +33,7 @@ public class Key : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if (player != null)
             {
-                player.ObtenerLlave(); // Dar la llave al jugador
+                player.ObtenerLlave(); // Dar la llave al jugador                
             }
             PlayerPrefs.SetInt("HasKey", 1); // Guardar que el jugador tiene la llave
             PlayerPrefs.Save(); // Asegurarse de que se guarden los cambios

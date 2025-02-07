@@ -10,8 +10,10 @@ public class EnemyManager : MonoBehaviour
     public ScoreManager scoreManager; // Referencia al ScoreManager
     public GameObject blockedDoorImage; // Referencia a la imagen de la puerta bloqueada
 
+
     private List<Enemy> enemies = new List<Enemy>(); // Lista de enemigos activos
     private int defeatedEnemies; // Enemigos derrotados
+
 
     private void Start()
     {
@@ -23,10 +25,10 @@ public class EnemyManager : MonoBehaviour
             SpawnEnemies(); // Solo generar enemigos si no han sido derrotados
         }
 
-        // Asegúrate de que la imagen de puerta bloqueada esté desactivada al inicio
+        // Asegúrate de que la imagen de puerta bloqueada esté activada al inicio
         if (blockedDoorImage != null)
         {
-            blockedDoorImage.SetActive(false);
+            blockedDoorImage.SetActive(true);
         }
     }
 
@@ -69,7 +71,7 @@ public class EnemyManager : MonoBehaviour
             Porta[] puertas = FindObjectsOfType<Porta>(); // Encuentra todas las instancias de Porta
             foreach (var puerta in puertas)
             {
-                puerta.HideBlockedDoorImage(); // Activar la imagen de la puerta bloqueada
+                puerta.HideBlockedDoorImage(); // Desactivar la imagen de la puerta bloqueada
             }
         }
     }
@@ -101,4 +103,5 @@ public class EnemyManager : MonoBehaviour
             blockedDoorImage.SetActive(false); // Desactivar la imagen
         }
     }
+
 }

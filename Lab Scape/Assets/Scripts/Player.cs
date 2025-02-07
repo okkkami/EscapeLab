@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
 
         // Asegúrate de que los objetos del UI no se muestren al inicio
+        // Asignar el evento onClick al botón
         if (mainMenuButton != null)
         {
             mainMenuButton.gameObject.SetActive(false); // Asegúrate de que el botón esté desactivado al inicio
@@ -74,6 +75,9 @@ public class Player : MonoBehaviour
         // Cargar la última puerta cruzada
         string lastDoor = PlayerPrefs.GetString("LastDoor", "");
         MoveToSpawnPoint(lastDoor);
+        mainMenuButton.gameObject.SetActive(false); // Asegúrate de que el botón esté desactivado al inicio
+        mainMenuButton.onClick.AddListener(LoadMainMenu); // Asigna el método al botón
+
     }
 
     private void MoveToSpawnPoint(string lastDoor)
@@ -230,6 +234,7 @@ public class Player : MonoBehaviour
     {
         DisablePlayerControls();  // Llamar al método que desactiva el control
         Destroy(gameObject); // Destruir el objeto del jugador
+        
     }
 
     public void BoostSpeed(float amount)
@@ -255,12 +260,12 @@ public class Player : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        Debug.Log("Cambiando a la escena del menú principal."); // Para depuración
         Time.timeScale = 1f;  // Asegurarse de que el tiempo se reinicie antes de cambiar de escena
         PlayerPrefs.SetFloat("PlayerSpeed", 5f); // Restablecer la velocidad del jugador a 5
         PlayerPrefs.SetInt("EnemiesDefeated", 0); // Restablecer el estado de los enemigos
         PlayerPrefs.Save(); // Guardar el valor restablecido
-        SceneManager.LoadScene("MainMenu");  // Cambiar a la escena del menú principal
-
+        SceneManager.LoadScene("MainMenu");
     }
     public void ObtenerLlave()
     {
@@ -268,6 +273,14 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetInt("HasKey", 1); // Guardar que el jugador tiene la llave
         PlayerPrefs.Save(); // Asegurarse de que se guarden los cambios
         Debug.Log("El jugador ha obtenido la llave.");
+
+        // Ocultar la imagen de la puerta bloqueada del tesoro
+        Porta puerta = FindObjectOfType<Porta>(); // Encuentra la instancia de Porta
+        if (puerta != null)
+        {
+            puerta.HideBlockedDoorImageTesoro(); // Ocultar la imagen de la puerta bloqueada del tesoro
+        }
+        
     }
 
     public bool HasKey()

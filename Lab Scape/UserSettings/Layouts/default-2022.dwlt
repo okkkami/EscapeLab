@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -424,7 +424,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 4ca1ffffaaa1ffff02a2ffff5ea2ffffb6a2ffff0ea3ffff76a3ffffdea3ffffcea5ffffa0b7ffff24beffff2ac1ffffc4c5ffff2ac8ffffc4c8ffff78cdffffdccdffff74ceffffdcceffff74cfffffdecfffff5ed3ffffe0d3ffff0ad9ffff2adcffffe0efffff44f0ffff34f3ffff90f3ffffeef3ffff3af4ffffd2f5ffff40f7ffffa6f7ffff1afbffffee720000
+      m_ExpandedIDs: 9eacffff06adffff90b2fffff2b2ffffd8e8ffffecf5ffff4cf6ffffb0f6ffff1afbffff966b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -817,9 +817,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.6233203, y: 1.0960937, z: 0.0387908}
+    m_Target: {x: 0.2629001, y: -0.25609764, z: 0.046262387}
     speed: 2
-    m_Value: {x: 0.6233203, y: 1.0960937, z: 0.0387908}
+    m_Value: {x: 0.2629001, y: -0.25609764, z: 0.046262387}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -869,9 +869,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 6.721154
+    m_Target: 5.975675
     speed: 2
-    m_Value: 6.721154
+    m_Value: 5.975675
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1075,7 +1075,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Prefabs
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1083,16 +1083,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 58
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Prefabs
   m_LastFoldersGridSize: 58
   m_LastProjectPath: C:\Users\KODY\Documents\GitHub\EscapeLab\Lab Scape
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 39}
-    m_SelectedIDs: a6620000
-    m_LastClickedID: 25254
-    m_ExpandedIDs: 000000008a620000ac62000000ca9a3b
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: a2620000
+    m_LastClickedID: 25250
+    m_ExpandedIDs: 000000008a620000a6620000aa620000ac6200003c6c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1120,7 +1120,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000008a6200008c620000
+    m_ExpandedIDs: 000000008a620000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1148,7 +1148,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000b4690000a66300003e6b00002e6b00000863000002630000fe610000ca620000b8a300006ab60000c2a30000d0620000ee660000706300006a6300000e6a0000926800004e620000fc630000e26500005a63000026750000f86300004e640000d6640000686c0000e6890000c6640000eaa90000929900000000000058710000
+    m_ExpandedInstanceIDs: c6230000b4690000a66300003e6b00002e6b00000863000002630000fe610000ca620000b8a300006ab60000c2a30000d0620000ee660000706300006a6300000e6a0000926800004e620000fc630000e26500005a63000026750000f86300004e640000d6640000686c0000e6890000c6640000eaa90000929900000000000058710000ea6b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

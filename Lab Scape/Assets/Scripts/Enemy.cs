@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
 
     public float bounceForce = 5f; // Fuerza de rebote al colisionar con el jugador
 
+    // Referencia al prefab de moneda
+    public GameObject coinPrefab; // Asigna el prefab de moneda en el inspector
+
     private void Start()
     {
         currentHealth = maxHealth; // Inicializar la salud actual
@@ -30,6 +33,7 @@ public class Enemy : MonoBehaviour
             transform.position += direction * moveSpeed * Time.deltaTime;
         }
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -68,6 +72,13 @@ public class Enemy : MonoBehaviour
         {
             enemyManager.EnemyDied(this); // Notificar al EnemyManager que este enemigo ha muerto
         }
+
+        // Instanciar la moneda en la posición del enemigo
+        if (coinPrefab != null)
+        {
+            Instantiate(coinPrefab, transform.position, Quaternion.identity);
+        }
+
         Destroy(gameObject); // Destruir el objeto enemigo
     }
 }

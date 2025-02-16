@@ -46,6 +46,9 @@ public class MenuController : MonoBehaviour
     {
         Debug.Log("Play Game");
 
+        // Cambia la música antes de cargar la escena
+        AudioManager.Instance.ChangeMusic();
+
         // Asegurarse de que la velocidad se restablezca a 5 antes de cargar la escena
         PlayerPrefs.SetFloat("PlayerSpeed", 5f);  // Establecer la velocidad a 5
         PlayerPrefs.DeleteAll(); // Limpiar todos los PlayerPrefs para restablecer el estado de los enemigos

@@ -4,6 +4,8 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance; // Instancia del Singleton
     public AudioSource audioSource; // Asigna el AudioSource en el Inspector
+    public AudioClip initialMusic; // Música inicial
+    public AudioClip newMusic; // Nueva música
     private bool isMuted = false; // Estado de mute
 
     private void Awake()
@@ -19,7 +21,10 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject); // Destruye el objeto si ya existe una instancia
         }
     }
-
+    private void Start()
+    {
+        PlayInitialMusic(); // Reproduce la música inicial al iniciar
+    }
     private void Update()
     {
         // Verifica si se presiona la tecla M
@@ -38,5 +43,20 @@ public class AudioManager : MonoBehaviour
     public void SetVolume(float volume)
     {
         audioSource.volume = volume; // Método para establecer el volumen
+    }
+
+    public void PlayInitialMusic()
+    {
+        audioSource.clip = initialMusic; // Asigna la música inicial
+        audioSource.loop = true; // Reproduce en bucle
+        audioSource.Play(); // Inicia la reproducción
+    }
+
+    public void ChangeMusic()
+    {
+        audioSource.Stop(); // Detiene la música actual
+        audioSource.clip = newMusic; // Cambia al nuevo clip de música
+        audioSource.loop = true; // Reproduce en bucle
+        audioSource.Play(); // Inicia la nueva música
     }
 }

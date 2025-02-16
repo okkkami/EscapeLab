@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: ab6b18861379cc84a9ec4b18d6e9b1d2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7faedbe0d220b89488a0175927d9303e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   maxHealth: 3
   moveSpeed: 2
   bounceForce: 1
+  coinPrefab: {fileID: 4700235992641890574, guid: 918386d20b2a99d4cab5659fd95f4bba, type: 3}
 --- !u!50 &8243426178721119
 Rigidbody2D:
   serializedVersion: 4

@@ -86,7 +86,6 @@ public class Porta : MonoBehaviour
     // Método para cambiar de escena
     private void CambiarEscena()
     {
-        Debug.Log("Cambiando de escena.");
         PlayerPrefs.SetString("LastDoor", doorName);
         SceneManager.LoadScene(sceneToLoad);
     }

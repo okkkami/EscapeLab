@@ -38,6 +38,9 @@ public class Player : MonoBehaviour
     public AudioClip damageSound; // Clip de sonido para daño
     public AudioClip shootSound; // Clip de sonido para disparo
 
+    public int coinCount; // Contador de monedas
+    public TextMeshProUGUI MonedaTXT; // Referencia al texto de la UI
+
 
 
     private void Start()
@@ -78,8 +81,34 @@ public class Player : MonoBehaviour
         mainMenuButton.gameObject.SetActive(false); // Asegúrate de que el botón esté desactivado al inicio
         mainMenuButton.onClick.AddListener(LoadMainMenu); // Asigna el método al botón
 
+        // Cargar el recuento de monedas guardado
+        coinCount = PlayerPrefs.GetInt("CoinCount", 0);
+        UpdateCoinCountUI();
+
+    
+
     }
 
+    public void CollectCoin()
+    {
+        coinCount++; // Incrementar el contador de monedas
+        UpdateCoinCountUI();
+        SaveCoinCount(); // Guardar el recuento de monedas
+    }
+
+    private void UpdateCoinCountUI()
+    {
+        if (MonedaTXT != null)
+        {
+            MonedaTXT.text = coinCount.ToString(); // Actualizar el texto de la UI
+        }
+    }
+
+    private void SaveCoinCount()
+    {
+        PlayerPrefs.SetInt("CoinCount", coinCount); // Guardar el recuento de monedas
+        PlayerPrefs.Save(); // Asegurarse de que se guarden los cambios
+    }
     private void MoveToSpawnPoint(string lastDoor)
     {
         // Encuentra el punto de aparición correspondiente y mueve al jugador
@@ -255,12 +284,11 @@ public class Player : MonoBehaviour
 
         // Mostrar la puntuación total
         int totalScore = PlayerPrefs.GetInt("Score", 0); // Cargar la puntuación total desde PlayerPrefs
-        totalScoreText.text = "Puntos Totales: " + totalScore; // Actualizar el texto de puntuación total
+        totalScoreText.text = "Total score: " + totalScore; // Actualizar el texto de puntuación total
     }
 
     public void LoadMainMenu()
     {
-        Debug.Log("Cambiando a la escena del menú principal."); // Para depuración
         Time.timeScale = 1f;  // Asegurarse de que el tiempo se reinicie antes de cambiar de escena
         PlayerPrefs.SetFloat("PlayerSpeed", 5f); // Restablecer la velocidad del jugador a 5
         PlayerPrefs.SetInt("EnemiesDefeated", 0); // Restablecer el estado de los enemigos

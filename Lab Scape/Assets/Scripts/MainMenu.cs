@@ -64,6 +64,10 @@ public class MenuController : MonoBehaviour
         PlayerPrefs.SetInt("Score", 0); // Reiniciar la puntuación a 0
         PlayerPrefs.Save(); // Asegurarse de que se guarden los cambios
 
+        // Restablecer el recuento de monedas
+        PlayerPrefs.SetInt("CoinCount", 0); // Reiniciar el recuento de monedas a 0
+        PlayerPrefs.Save(); // Asegurarse de que se guarden los cambios
+
 
         SceneManager.LoadScene("hab_inicial");
     }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 736057327068921893}
   - component: {fileID: 5482123489485611802}
   - component: {fileID: 1664547887587296978}
-  - component: {fileID: 6984391655497834880}
   - component: {fileID: 8407850455823533344}
   - component: {fileID: 6039135515913928857}
   m_Layer: 0
@@ -110,33 +109,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!50 &6984391655497834880
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080612271746810044}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!61 &8407850455823533344
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -205,10 +177,15 @@ MonoBehaviour:
   initialMoveSpeed: 5
   gameOverText: {fileID: 0}
   mainMenuButton: {fileID: 0}
+  totalScoreText: {fileID: 0}
   firePoint: {fileID: 107282213186917924}
   bulletPrefab: {fileID: 1900437956048120823, guid: 5de1b9d329a0841438ccdff0d11d08b8, type: 3}
   bulletSpeed: 10
   fireRate: 0.3
+  damageSound: {fileID: 0}
+  shootSound: {fileID: 0}
+  coinCount: 0
+  MonedaTXT: {fileID: 0}
 --- !u!1 &5308120809457658128
 GameObject:
   m_ObjectHideFlags: 0

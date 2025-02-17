@@ -26,10 +26,10 @@ public class EnemyManager : MonoBehaviour
         }
 
         // Asegúrate de que la imagen de puerta bloqueada esté activada al inicio
-        if (blockedDoorImage != null)
-        {
-            blockedDoorImage.SetActive(true);
-        }
+      //  if (blockedDoorImage != null)
+       // {
+           // blockedDoorImage.SetActive(true);
+       // }
     }
 
     public void SpawnEnemies()
@@ -71,7 +71,8 @@ public class EnemyManager : MonoBehaviour
             Porta[] puertas = FindObjectsOfType<Porta>(); // Encuentra todas las instancias de Porta
             foreach (var puerta in puertas)
             {
-                puerta.HideBlockedDoorImage(); // Desactivar la imagen de la puerta bloqueada
+                //puerta.HideBlockedDoorImage(); // Desactivar la imagen de la puerta bloqueada
+                puerta.UnlockDoor(); // Desbloquear la puerta
             }
         }
     }

@@ -45,6 +45,9 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+
+        
+
         // Recuperar la salud desde PlayerPrefs
         currentHealth = PlayerPrefs.GetInt("PlayerHealth", maxHealth); // Si no está guardada, se establece a maxHealth
 
@@ -160,20 +163,30 @@ public class Player : MonoBehaviour
         float moveX = 0f;
         float moveY = 0f;
 
-        if (Input.GetKey(KeyCode.A)) moveX = -1f;
-        if (Input.GetKey(KeyCode.D)) moveX = 1f;
-        if (Input.GetKey(KeyCode.W)) moveY = 1f;
-        if (Input.GetKey(KeyCode.S)) moveY = -1f;
+        // Captura la entrada del jugador
+        if (Input.GetKey(KeyCode.A)) moveX = -5f;
+        if (Input.GetKey(KeyCode.D)) moveX = 5f;
+        if (Input.GetKey(KeyCode.W)) moveY = 5f;
+        if (Input.GetKey(KeyCode.S)) moveY = -5f;
 
-        Vector3 move = new Vector3(moveX, moveY, 0f).normalized * currentMoveSpeed * Time.deltaTime;
-        transform.Translate(move);
+        // Crea un vector de movimiento normalizado
+        Vector2 move = new Vector2(moveX, moveY).normalized * currentMoveSpeed * Time.deltaTime;
 
-        // Guardar la última dirección de movimiento (evita disparar en dirección incorrecta)
+        // Obtiene el componente Rigidbody2D
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            // Mueve el jugador usando Rigidbody2D
+            rb.MovePosition(rb.position + move);
+        }
+
+        // Guardar la última dirección de movimiento
         if (moveX != 0 || moveY != 0)
         {
             lastMoveDirection = new Vector2(moveX, moveY).normalized;
         }
 
+        // Actualiza la animación
         UpdateAnimation(moveX, moveY);
     }
 
@@ -306,9 +319,12 @@ public class Player : MonoBehaviour
         Porta puerta = FindObjectOfType<Porta>(); // Encuentra la instancia de Porta
         if (puerta != null)
         {
-            puerta.HideBlockedDoorImageTesoro(); // Ocultar la imagen de la puerta bloqueada del tesoro
+            // puerta.HideBlockedDoorImageTesoro(); // Ocultar la imagen de la puerta bloqueada del tesoro
+            puerta.UnlockDoor(); // Desbloquear la puerta
         }
-        
+
+
+
     }
 
     public bool HasKey()

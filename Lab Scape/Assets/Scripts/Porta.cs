@@ -1,43 +1,52 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI; // Asegúrate de incluir esto para trabajar con UI
 
 public class Porta : MonoBehaviour
 {
     [SerializeField] private string sceneToLoad;  // Nombre de la escena destino
     [SerializeField] private string doorName;     // Nombre único de esta puerta
     private EnemyManager enemyManager; // Referencia al EnemyManager
-    public GameObject blockedDoorImage; // Referencia a la imagen de puerta bloqueada
-    public GameObject blockedDoorImageTesoro; // Referencia a la imagen de puerta bloqueada del tesoro
+
+    private Animator animator;
+    private bool isLocked = true; // Estado inicial de la puerta
+    private bool isOpen = false; // Estado de la puerta (abierta o cerrada)
 
     private void Start()
     {
-        // Obtener la referencia al EnemyManager en la escena
-        enemyManager = FindObjectOfType<EnemyManager>();
+        animator = GetComponent<Animator>();
+        enemyManager = FindObjectOfType<EnemyManager>(); // Obtener la referencia al EnemyManager
+    }
 
-        // Asegúrate de que la imagen de puerta bloqueada esté activada al inicio
-        if (blockedDoorImage != null)
+    // Método para desbloquear la puerta
+    public void UnlockDoor()
+    {
+        if (isLocked)
         {
-            blockedDoorImage.SetActive(true);
-        }
-        // Asegúrate de que la imagen de puerta bloqueada esté activada al inicio
-        if (blockedDoorImageTesoro != null)
-        {
-            blockedDoorImageTesoro.SetActive(true);
+            isLocked = false;
+
+            // Verificar si todos los enemigos han sido derrotados usando el método del EnemyManager
+            if (enemyManager != null && enemyManager.AreAllEnemiesDefeated())
+            {
+                OpenDoor();
+            }
         }
     }
 
-    private void Update()
+    private void OpenDoor()
     {
-        // Verificar si hay enemigos en la sala actual
-        if (enemyManager != null && enemyManager.AreAllEnemiesDefeated())
+        if (!isOpen && animator != null)
         {
-            HideBlockedDoorImage(); // Ocultar la imagen si no hay enemigos
+            animator.SetTrigger("OpenDoor"); // Asegúrate de que este nombre coincida exactamente
+            isOpen = true; // Cambia el estado a abierto
         }
-        else
-        {
-            ShowBlockedDoorImage(); // Mostrar la imagen si hay enemigos
-        }
+    }
+
+   
+
+    // Método para verificar si la puerta está bloqueada
+    public bool IsLocked()
+    {
+        return isLocked;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,13 +67,12 @@ public class Porta : MonoBehaviour
                 // Verificar si el jugador tiene la llave
                 if (player != null && player.HasKey())
                 {
-            
-                    CambiarEscena();
+                   
+                    CambiarEscena(); // Cambiar de escena
                 }
                 else
                 {
                     Debug.Log("La puerta del tesoro está bloqueada. Necesitas una llave.");
-                    ShowBlockedDoorImageTesoro(); // Mostrar imagen de puerta bloqueada
                 }
             }
             else
@@ -72,12 +80,12 @@ public class Porta : MonoBehaviour
                 // Verificar si todos los enemigos han sido derrotados
                 if (enemyManager != null && enemyManager.AreAllEnemiesDefeated())
                 {
-                    CambiarEscena();
+                    UnlockDoor(); // Desbloquear la puerta
+                    CambiarEscena(); // Cambiar de escena
                 }
                 else
                 {
                     Debug.Log("La puerta está bloqueada. Derrota a todos los enemigos primero.");
-                    ShowBlockedDoorImage(); // Mostrar imagen de puerta bloqueada
                 }
             }
         }
@@ -88,40 +96,5 @@ public class Porta : MonoBehaviour
     {
         PlayerPrefs.SetString("LastDoor", doorName);
         SceneManager.LoadScene(sceneToLoad);
-    }
-
-    // Método para mostrar la imagen de puerta bloqueada
-    private void ShowBlockedDoorImage()
-    {
-        if (blockedDoorImage != null)
-        {
-            blockedDoorImage.SetActive(true); // Activar la imagen
-        }
-    }
-
-    // Método para mostrar la imagen de puerta bloqueada
-    private void ShowBlockedDoorImageTesoro()
-    {
-        if (blockedDoorImageTesoro != null)
-        {
-            blockedDoorImageTesoro.SetActive(true); // Activar la imagen
-        }
-    }
-
-    // Método para ocultar la imagen de puerta bloqueada
-    public void HideBlockedDoorImage()
-    {
-        if (blockedDoorImage != null)
-        {
-            blockedDoorImage.SetActive(false); // Desactivar la imagen
-        }
-    }
-    public void HideBlockedDoorImageTesoro()
-    {
-        if (blockedDoorImageTesoro != null)
-        {
-            Debug.Log("Ocultando la imagen de la puerta bloqueada del tesoro."); // Para depuración
-            blockedDoorImageTesoro.SetActive(false); // Desactivar la imagen
-        }
     }
 }

@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public GameObject[] cheeseIcons;  // Los iconos de los quesos en la UI
 
     // Variables de control del jugador
-    public float initialMoveSpeed = 5f;  // Velocidad inicial del jugador
+    public float initialMoveSpeed = 10f;  // Velocidad inicial del jugador
     private float currentMoveSpeed;  // Velocidad actual del jugador
     private Animator animator;
 

@@ -50,7 +50,7 @@ public class MenuController : MonoBehaviour
         AudioManager.Instance.ChangeMusic();
 
         // Asegurarse de que la velocidad se restablezca a 5 antes de cargar la escena
-        PlayerPrefs.SetFloat("PlayerSpeed", 5f);  // Establecer la velocidad a 5
+        PlayerPrefs.SetFloat("PlayerSpeed", 10f);  // Establecer la velocidad a 5
         PlayerPrefs.DeleteAll(); // Limpiar todos los PlayerPrefs para restablecer el estado de los enemigos
         PlayerPrefs.Save();  // Guardar la configuración
 

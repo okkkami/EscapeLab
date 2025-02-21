@@ -552,7 +552,7 @@ PrefabInstance:
       objectReference: {fileID: 344018090}
     - target: {fileID: 6039135515913928857, guid: 6736955553e82e042affecbd248f8459, type: 3}
       propertyPath: initialMoveSpeed
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6039135515913928857, guid: 6736955553e82e042affecbd248f8459, type: 3}
       propertyPath: cheeseIcons.Array.data[0]

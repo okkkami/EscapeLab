@@ -50,7 +50,7 @@ public class MenuController : MonoBehaviour
         AudioManager.Instance.ChangeMusic();
 
         // Asegurarse de que la velocidad se restablezca a 5 antes de cargar la escena
-        PlayerPrefs.SetFloat("PlayerSpeed", 10f);  // Establecer la velocidad a 5
+        PlayerPrefs.SetFloat("PlayerSpeed", 30f);  // Establecer la velocidad a 10
         PlayerPrefs.DeleteAll(); // Limpiar todos los PlayerPrefs para restablecer el estado de los enemigos
         PlayerPrefs.Save();  // Guardar la configuración
 
@@ -60,7 +60,7 @@ public class MenuController : MonoBehaviour
 
         // Restablecer la salud del jugador
         PlayerPrefs.SetInt("PlayerHealth", 6); // Restablecer la salud a su valor máximo
-        PlayerPrefs.SetInt("HasKey", 0); // Restablecer el estado de la llave
+       // PlayerPrefs.SetInt("HasKey", 0); // Restablecer el estado de la llave
         PlayerPrefs.Save(); // Asegurarse de que se guarden los cambios
 
         // Restablecer la puntuación
@@ -74,7 +74,6 @@ public class MenuController : MonoBehaviour
 
         SceneManager.LoadScene("hab_inicial");
     }
-
 
     void OpenOptions()
     {

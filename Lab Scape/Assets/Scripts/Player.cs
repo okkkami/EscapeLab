@@ -11,13 +11,12 @@ public class Player : MonoBehaviour
     public GameObject[] cheeseIcons;  // Los iconos de los quesos en la UI
 
     // Variables de control del jugador
-    public float initialMoveSpeed = 10f;  // Velocidad inicial del jugador
+    public float initialMoveSpeed = 30f;  // Velocidad inicial del jugador
     private float currentMoveSpeed;  // Velocidad actual del jugador
     private Animator animator;
 
     private bool isGameOver = false; // Flag para saber si el juego ha terminado
     public GameObject gameOverText;  // Referencia al texto de Game Over
-    public Button mainMenuButton;  // Cambia a Button en lugar de GameObject
     public TextMeshProUGUI totalScoreText; // Referencia al texto que mostrará la puntuación total
 
     private bool hasKey; // Indica si el jugador tiene la llave
@@ -41,14 +40,15 @@ public class Player : MonoBehaviour
     public int coinCount; // Contador de monedas
     public TextMeshProUGUI MonedaTXT; // Referencia al texto de la UI
 
+    private AudioSource footstepAudioSource; // AudioSource para pasos
+    private AudioSource hurtAudioSource; // AudioSource para daño
+    private AudioSource spitAudioSource; // AudioSource para disparo
+
 
 
     private void Start()
     {
-
-        
-
-        // Recuperar la salud desde PlayerPrefs
+         // Recuperar la salud desde PlayerPrefs
         currentHealth = PlayerPrefs.GetInt("PlayerHealth", maxHealth); // Si no está guardada, se establece a maxHealth
 
         // Recuperar la velocidad desde PlayerPrefs
@@ -56,13 +56,6 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
 
         // Asegúrate de que los objetos del UI no se muestren al inicio
-        // Asignar el evento onClick al botón
-        if (mainMenuButton != null)
-        {
-            mainMenuButton.gameObject.SetActive(false); // Asegúrate de que el botón esté desactivado al inicio
-            mainMenuButton.onClick.AddListener(LoadMainMenu); // Asigna el método al botón
-        }
-
         if (gameOverText != null)
         {
             gameOverText.SetActive(false); // Asegúrate de que el texto de Game Over esté desactivado al inicio
@@ -74,23 +67,57 @@ public class Player : MonoBehaviour
         }
 
         UpdateCheeseUI(); // Asegúrate de que este método esté definido
+
         // Inicializar el estado de la llave
         hasKey = PlayerPrefs.GetInt("HasKey", 0) == 1; // 0 significa que no tiene la llave
-        audioSource = GetComponent<AudioSource>(); // Obtener el componente AudioSource
+
+        //Sonidos
+        footstepAudioSource = GetComponents<AudioSource>()[0]; // Asumiendo que el primer AudioSource es para pasos
+        hurtAudioSource = GetComponents<AudioSource>()[1]; 
+        spitAudioSource = GetComponents<AudioSource>()[2]; 
 
         // Cargar la última puerta cruzada
         string lastDoor = PlayerPrefs.GetString("LastDoor", "");
         MoveToSpawnPoint(lastDoor);
-        mainMenuButton.gameObject.SetActive(false); // Asegúrate de que el botón esté desactivado al inicio
-        mainMenuButton.onClick.AddListener(LoadMainMenu); // Asigna el método al botón
 
         // Cargar el recuento de monedas guardado
         coinCount = PlayerPrefs.GetInt("CoinCount", 0);
         UpdateCoinCountUI();
-
-    
-
     }
+
+    // Método para reproducir el sonido de los pasos
+    public void Step()
+    {
+        if (!footstepAudioSource.isPlaying)
+        {
+            footstepAudioSource.Play(); // Reproduce el sonido de los pasos
+        }
+    }
+
+    // Método para detener el sonido de los pasos
+    public void StopFootstepSound()
+    {
+        footstepAudioSource.Stop(); // Detiene el sonido de los pasos
+    }
+
+    // Método para reproducir sonido daño
+    public void PlayHurtSound()
+    {
+        if (hurtAudioSource != null && !hurtAudioSource.isPlaying)
+        {
+            hurtAudioSource.Play(); // Reproduce otros sonidos
+        }
+    }
+
+
+    public void PlaySpitSound()
+    {
+        if (spitAudioSource != null && !spitAudioSource.isPlaying)
+        {
+            spitAudioSource.Play(); 
+        }
+    }
+
 
     public void CollectCoin()
     {
@@ -112,6 +139,7 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetInt("CoinCount", coinCount); // Guardar el recuento de monedas
         PlayerPrefs.Save(); // Asegurarse de que se guarden los cambios
     }
+
     private void MoveToSpawnPoint(string lastDoor)
     {
         // Encuentra el punto de aparición correspondiente y mueve al jugador
@@ -221,10 +249,7 @@ public class Player : MonoBehaviour
         nextFireTime = Time.time + fireRate; // Configurar el tiempo para el próximo disparo
 
         // Reproducir el sonido de disparo
-        if (audioSource != null && shootSound != null)
-        {
-            audioSource.PlayOneShot(shootSound); // Reproducir el sonido de disparo
-        }
+        PlaySpitSound();
     }
 
     void UpdateAnimation(float moveX, float moveY)
@@ -244,11 +269,7 @@ public class Player : MonoBehaviour
 
         UpdateCheeseUI();  // Actualizar la UI de quesos
 
-        // Reproducir el sonido de daño
-        if (audioSource != null && damageSound != null)
-        {
-            audioSource.PlayOneShot(damageSound); // Reproducir el sonido de daño
-        }
+        PlayHurtSound(); // Reproduce el sonido del daño
 
         // Guardar la salud actual en PlayerPrefs
         PlayerPrefs.SetInt("PlayerHealth", currentHealth);
@@ -291,7 +312,6 @@ public class Player : MonoBehaviour
     {
         isGameOver = true;  // Cambiar el flag a verdadero para bloquear entradas
         gameOverText.SetActive(true);  // Mostrar el texto de Game Over
-        mainMenuButton.gameObject.SetActive(true);  // Mostrar el botón de "Main Menu"
         totalScoreText.gameObject.SetActive(true);
         Time.timeScale = 0f;  // Detener todo el tiempo del juego
 
@@ -300,14 +320,6 @@ public class Player : MonoBehaviour
         totalScoreText.text = "Total score: " + totalScore; // Actualizar el texto de puntuación total
     }
 
-    public void LoadMainMenu()
-    {
-        Time.timeScale = 1f;  // Asegurarse de que el tiempo se reinicie antes de cambiar de escena
-        PlayerPrefs.SetFloat("PlayerSpeed", 5f); // Restablecer la velocidad del jugador a 5
-        PlayerPrefs.SetInt("EnemiesDefeated", 0); // Restablecer el estado de los enemigos
-        PlayerPrefs.Save(); // Guardar el valor restablecido
-        SceneManager.LoadScene("MainMenu");
-    }
     public void ObtenerLlave()
     {
         hasKey = true; // Indica que el jugador ahora tiene la llave
@@ -315,22 +327,25 @@ public class Player : MonoBehaviour
         PlayerPrefs.Save(); // Asegurarse de que se guarden los cambios
         Debug.Log("El jugador ha obtenido la llave.");
 
-        // Ocultar la imagen de la puerta bloqueada del tesoro
+       
         Porta puerta = FindObjectOfType<Porta>(); // Encuentra la instancia de Porta
         if (puerta != null)
         {
             // puerta.HideBlockedDoorImageTesoro(); // Ocultar la imagen de la puerta bloqueada del tesoro
             puerta.UnlockDoor(); // Desbloquear la puerta
         }
+    }
 
-
-
+    public void OnIdle()
+    {
+        StopFootstepSound(); // Detiene el sonido de los pasos
     }
 
     public bool HasKey()
     {
         return hasKey; // Método para verificar si el jugador tiene la llave
     }
+
     // Método para restablecer la salud
     public void ResetHealth()
     {

@@ -8,12 +8,14 @@ public class Porta : MonoBehaviour
     private EnemyManager enemyManager; // Referencia al EnemyManager
 
     private Animator animator;
+    private AudioSource audioSource; // Referencia al AudioSource
     private bool isLocked = true; // Estado inicial de la puerta
-    private bool isOpen = false; // Estado de la puerta (abierta o cerrada)
+    private bool isOpen = false; // Estado de la puerta 
 
     private void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>(); // Obtener la referencia al AudioSource
         enemyManager = FindObjectOfType<EnemyManager>(); // Obtener la referencia al EnemyManager
     }
 
@@ -37,11 +39,18 @@ public class Porta : MonoBehaviour
         if (!isOpen && animator != null)
         {
             animator.SetTrigger("OpenDoor"); // Asegúrate de que este nombre coincida exactamente
+            PlayDoorSound(); // Reproducir el sonido de la puerta
             isOpen = true; // Cambia el estado a abierto
         }
     }
 
-   
+    public void PlayDoorSound()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Play(); // Reproducir el sonido
+        }
+    }
 
     // Método para verificar si la puerta está bloqueada
     public bool IsLocked()
@@ -59,7 +68,6 @@ public class Porta : MonoBehaviour
             // Verificar si la puerta es DoorInicial
             if (doorName == "doorInicialR")
             {
-                // Siempre se puede pasar por DoorInicial
                 CambiarEscena();
             }
             else if (doorName == "DoorTesoro")
@@ -67,7 +75,6 @@ public class Porta : MonoBehaviour
                 // Verificar si el jugador tiene la llave
                 if (player != null && player.HasKey())
                 {
-                   
                     CambiarEscena(); // Cambiar de escena
                 }
                 else
